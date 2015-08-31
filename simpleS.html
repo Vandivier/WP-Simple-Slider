@@ -1,0 +1,71 @@
+<head>
+<style>
+.imgSlideWrap {
+  width: 200px;
+  height: 300px;
+  margin: 30px auto;
+  position: relative;
+}
+.imgSlide {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+}
+.imgSlide0{
+  background-color: red;
+}
+.imgSlide1{
+  background-color: green;
+}
+.imgSlide2{
+  background-color: blue;
+}
+.imgSlide3{
+  background-color: orange;
+}
+</style>
+</head>
+<body>
+  <div>Thank you for using WP jQuery UI Slider! Add arbitrary HTML to slide content.</div><br />
+  <textarea id='appendHTML'><style></style></textarea>
+  <button onclick="jQuery('head').append(jQuery('#appendHTML').html())">Append HTML</button>
+<br />
+<div>Slider sample below: </div><br />
+<div class="imgSlideWrap">
+  <div class="imgSlide imgSlide0 currentSlide"></div>
+  <div class="imgSlide imgSlide1 nextIn"></div>
+  <div class="imgSlide imgSlide2"></div>
+  <div class="imgSlide imgSlide3"></div>
+</div>
+</body>
+<footer>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script>
+var j,a,b,c;
+jQuery(".imgSlide:not(.currentSlide)").hide();
+setInterval(function(){ cycleSlider() }, 3500);
+function cycleSlider() {
+  b = jQuery('.imgSlide').length - 1;
+  for (j = 0; j < b+1; j++) {
+    if (jQuery('.imgSlide' + j).hasClass('currentSlide')) {
+      cycleStep1(j);
+      a = eval(j+1);
+      if (a > b) { cycleStep2('0'); cycleStep3('1'); }
+	  else { cycleStep2(a); c = eval(j+2); c > b ? cycleStep3('0') : cycleStep3(c); }
+      return false;
+    }
+  }
+}
+function cycleStep1(which) {
+  jQuery('.imgSlide' + which).toggle('slide',{direction:'left'},1000).removeClass('currentSlide');
+}
+function cycleStep2(which) {
+  jQuery('.imgSlide' + which).toggle('slide',{direction:'right'},1000).removeClass('nextIn').addClass('currentSlide');
+}
+function cycleStep3(which) {
+  jQuery('.imgSlide' + which).addClass('nextIn');
+}
+</script>
+</footer>
